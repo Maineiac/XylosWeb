@@ -1,0 +1,10 @@
+/.idea/
+/vendor/
+/cache/
+/config/FILE_WRITE_CHECK_DO_NOT_REMOVE
+/config/settings.php
+/data/
+/screenshots/
+/streams/
+/webcaps/
+/hasperm/

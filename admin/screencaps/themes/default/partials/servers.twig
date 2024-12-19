@@ -1,0 +1,122 @@
+<div class="row my-4">
+    {% for server in servers %}
+        <div class="col-12 col-md-6">
+            <div class="card server">
+                <div class="card-header">
+                    <h5 class="card-title">{{ server.hostname|default('N/A') }}</h5>
+                    <p class="card-text">{{ server.address|default('N/A') }} - <a
+                                href="steam://connect/{{ server.address }}">{{ lang('server.connect') }}</a></p>
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="server-info-tab-{{ loop.index }}" data-toggle="tab"
+                               href="#server-info-{{ loop.index }}" role="tab"
+                               aria-controls="server-info-{{ loop.index }}"
+                               aria-selected="true">{{ lang('server.info') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="server-players-tab-{{ loop.index }}" data-toggle="tab"
+                               href="#server-players-{{ loop.index }}" role="tab"
+                               aria-controls="server-players-{{ loop.index }}">{{ lang('server.players') }}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="server-info-{{ loop.index }}" role="tabpanel"
+                             aria-labelledby="server-info-tab-{{ loop.index }}">
+                            <p>
+                                <i class="fas fa-gamepad"></i> {{ server.gamemode|default('N/A') }}
+                            </p>
+                            <p>
+                                <i class="fas fa-map"></i> {{ server.map|default('N/A') }}
+                            </p>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"
+                                     style="width: {{ server.percentage_full }}%"
+                                     aria-valuenow="{{ server.percentage_full }}" aria-valuemin="0" aria-valuemax="100">
+                                    <span>{{ server.players|length|default(0) }}/{{ server.max_players|default(0) }} {{ lang('server.players') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="server-players-{{ loop.index }}" role="tabpanel"
+                             aria-labelledby="server-players-tab-{{ loop.index }}">
+                            <div class="text-right">
+                                <button class="btn btn-primary request-screenshot" style="margin-bottom:10px;"
+                                        data-toggle="modal" data-target="#screenshot-player" data-steamid="all"
+                                        data-server="{{ server.address|default('0') }}">Screenshot all players
+                                </button>
+                            </div>
+                            <table class="table table-bordered server-players">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">{{ lang('name') }}</th>
+                                    <th scope="col">{{ lang('time') }}</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for player in server.players %}
+                                    <tr>
+                                        <th scope="row">{{ loop.index }}</th>
+                                        <td><a href="{{ route('user', [player[1]]) }}"
+                                               target="_blank">{{ player[0] }}</a></td>
+                                        <td>{{ player[2]|h_m_s }}</td>
+                                        <td class="text-center" title="Screenshot Player" data-toggle="tooltip">
+                                            <button class="btn btn-primary btn-icon-circle request-screenshot"
+                                                    data-toggle="modal" data-target="#screenshot-player"
+                                                    data-steamid="{{ player[1] }}"
+                                                    data-server="{{ server.address|default('0') }}"
+                                            ><i class="fas fa-camera"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="modal fade" id="screenshot-player" tabindex="-1" role="dialog" aria-labelledby="screenshot-player-label"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="screenshot-player-form" action="{{ route('servers') }}" method="post">
+            <input type="hidden" id="screenshot-server" name="screenshot-server" value="0">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="screenshot-player-label">Screenshot Player(s)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="screenshot-steamid">Steamid</label>
+                        <input type="text" id="screenshot-steamid" class="form-control" name="screenshot-steamid"
+                               required readonly>
+                    </div>
+                    <div class="form-group">
+                        <select class="custom-select" name="screenshot-method" required>
+                            <option value="1" selected>Render Capture</option>
+                            <option value="2">Rendertarget</option>
+                            <option value="3">Pixelskip</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="screenshot-quality">Quality (0-100)</label>
+                        <input type="range" id="screenshot-quality" class="custom-range" name="screenshot-quality"
+                               min="1" max="100" step="1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary screenshot-player">Screenshot</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

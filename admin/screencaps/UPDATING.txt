@@ -1,0 +1,2 @@
+1. Extract and copy ALL the files. Overwrite any existing ones.
+2. Delete the "cache" folder and let it be recreated.

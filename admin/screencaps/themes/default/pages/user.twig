@@ -1,0 +1,18 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <style>
+        #banner_{{ player.steamid }}:before {
+            background-image: url('{{ player.screenshots[0].image }}');
+        }
+    </style>
+    <div class="row my-2">
+        <div class="col-12 text-center justify-content-center">
+            <div id="{{ 'banner_' ~ player.steamid }}" class="user-banner py-3">
+                <img class="avatar medium rounded" src="{{ player.info.avatarfull }}">
+                <h3>{{ player.info.personaname }}</h3>
+            </div>
+        </div>
+    </div>
+    {% include '@partials/screenshots.twig' with {'screenshots': player.screenshots, 'self': true} only %}
+{% endblock %}

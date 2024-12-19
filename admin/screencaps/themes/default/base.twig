@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="{{ app.locale }}">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="theme-color" content="#256bb3">
+    <meta property="og:site_name" content="{{ app.site_name }}">
+    <meta property="og:title" content="Leyscreencap Web Panel"/>
+    <meta property="og:description" content="Leyscreencap web panel developed by @kanalumaddela"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{ app.current }}"/>
+
+    <title>{% block title %}Home{% endblock %} | {{ app.site_name|default('Xylos Screencaps') }}</title>
+
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://steamcdn-a.akamaihd.net">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
+          integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
+    {{ theme(null, true) }}
+    {% block head %}{% endblock %}
+</head>
+<body>
+{% block css %}{% endblock %}
+
+{% include '@partials/navigation.twig' %}
+
+<div class="overlay"></div>
+
+<main class="container">
+    {% block content %}{% endblock %}
+</main>
+
+<div id="toasts"></div>
+
+{% include '@partials/footer.twig' %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script>
+    var app = {{ app|json_encode()|raw }};
+    var locale = {{ lang|json_encode()|raw }};
+    var locale_fallback = {{ lang_fallback|json_encode()|raw }};
+</script>
+<script src="{{ theme('js/site.js', true) }}"></script>
+{% block js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('index') }}">Xylos Screencaps</a>
+        <button id="nav-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-tabs">
+            <span class="fas fa-bars"></span>
+        </button>
+
+        <div id="nav-tabs" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <!--
+                    Current: {{ app.current }}
+                    Path: {{ app.path }}
+                    Route: {{ app.route }}
+                -->
+                {% if session.steamid %}
+                    <li class="nav-item {% if app.root_url ~ route('index') == app.current or app.root_url ~ route('index') ~ '/' == app.current  %}active{% endif %}">
+                        <a class="nav-link" href="{{ route('index') }}"><i class="fas fa-home"></i> {{ lang('home') }}
+                        </a>
+                    </li>
+                    <li class="nav-item {% if route('users') in app.current %}active{% endif %}">
+                        <a class="nav-link" href="{{ route('users') }}"><i
+                                    class="fas fa-users"></i> {{ lang('user.plural') }}</a>
+                    </li>
+                    <li class="nav-item {% if route('screenshots') in app.current %}active{% endif %}">
+                        <a class="nav-link" href="{{ route('screenshots') }}"><i
+                                    class="fas fa-images"></i> {{ lang('screenshot.plural') }}</a>
+                    </li>
+                    <li class="nav-item {% if route('servers') in app.current %}active{% endif %}">
+                        <a class="nav-link" href="{{ route('servers') }}"><i
+                                    class="fas fa-server"></i> {{ lang('server.plural') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-danger" href="{{ route('logout') }}" style="color:#fff;">
+                            <img src="{{ session.avatarSmall }}" style="max-width:25px;border-radius:50%;">
+                            {{ lang('logout') }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ steam.login_url }}"><i
+                                    class="fab fa-steam"></i> {{ lang('login') }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

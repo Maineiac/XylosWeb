@@ -1,0 +1,23 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <h2>{{ lang('server.your') }}</h2>
+    <h6 class="font-weight-light">{{ lang('server.description') }}</h6>
+    {% include '@partials/servers.twig' %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('.request-screenshot').click(function () {
+            let steamid = $(this).data('steamid');
+            let server = $(this).data('server') ? $(this).data('server') : 0;
+
+            $('#screenshot-steamid').val(steamid);
+            $('#screenshot-server').val(server);
+        });
+        $('#screenshot-player').on('hide.bs.modal', function (e) {
+            $('#screenshot-steamid').val('');
+            $('#screenshot-server').val('');
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "require": {
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-openssl": "*",
+        "ext-simplexml": "*",
+        "j0sh0nat0r/simple-cache": "^1.0",
+        "kanalumaddela/steam-login": "dev-master",
+        "phroute/phroute": "^2.1",
+        "twig/twig": "^2.13"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    }
+}

@@ -1,0 +1,41 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 my-3">
+            <div>
+                <h1>Uh-Oh, an error has occurred</h1>
+                <h5><code>{{ error.message }}</code></h5>
+                <hr>
+                <h5>Before submitting a ticket</h5>
+                <ol>
+                    <li>
+                        Check and make sure your <code class="code">config/settings.php</code> is correct
+                        <ul>
+                            <li>Make sure all the values are in proper single quotes <code class="code">'</code></li>
+                            <li>Make sure all lines end in a comma for example: <code class="code">'server_key' =>
+                                    'CHANGETHISPLZ',</code> &lt;-- Note the comma at the end
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Enable debug mode by opening your <code class="code">config/constants.php</code> and setting
+                        <code class="code">DEBUG</code> --> <code class="code">true</code></li>
+                    <li>Be sure to check the most recent lines from your logs which are located in <code class="code">data/logs</code>
+                        for any errors you may be able to fix yourself
+                    </li>
+                    <li>If all else fails, please contact <a
+                                href="https://www.gmodstore.com/dashboard/support/tickets/create/5061" target="_blank">Leystryku
+                            or kanalumaddela</a></li>
+                </ol>
+                {% if error.trace %}
+                <hr>
+                <h5>Stack Trace</h5>
+                <pre style="background: rgba(0, 0, 0, 0.2); color: #f1f1f1;"><code>{% for index,info in error.trace %}[{{ index|default('N/A') }}] - {{ info.file|default('<unknown file>') }}
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;Function: {{ info.function }}
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;Line: {{ info.line }}<br>{% endfor %}</code>
+				{% endif %}
+				</pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}

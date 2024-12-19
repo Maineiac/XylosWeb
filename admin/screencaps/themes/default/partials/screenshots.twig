@@ -1,0 +1,22 @@
+<div id="screenshots" class="row my-4">
+    {% for screenshot in screenshots %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-3 screenshot">
+            <button class="btn btn-danger btn-icon-circle delete-screenshot" title="{{ lang('screenshot.trash') }}"
+                    data-toggle="tooltip" data-screenshot="{{ screenshot.image }}"><i class="fas fa-trash"></i></button>
+            <div class="image-wrapper">
+                <img id="{{ screenshot.id }}" src="{{ screenshot.image }}" class="img-fluid lightbox">
+                <div id="{{ screenshot.id }}_details" class="image-details">
+                    {% if not self %}
+                        <span>
+                            <a href="{{ route('user', [screenshot.player]) ~ '#' ~ screenshot.id }}">
+                                <img class="avatar rounded" src="{{ steaminfo[screenshot.player].avatar }}">
+                                {{ steaminfo[screenshot.player].personaname|default(screenshot.player) }}
+                            </a>
+                        </span>
+                    {% endif %}
+                    <span data-timestamp="{{ screenshot.timestamp }}">{{ screenshot.date }}</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
