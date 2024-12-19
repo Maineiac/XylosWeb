@@ -4,7 +4,7 @@ $discordWebhook = $_POST['webhook'] ?? null; // Discord webhook URL
 $authorSteamID = $_POST['author_id'] ?? null; // SteamID of the user
 $authorName = $_POST['author'] ?? "Unknown Author"; // Author name
 $messageBody = $_POST['message'] ?? ""; // The body of the message (may contain image references)
-$imageBaseURL = "https://api.akulla.dev/public/uploads/"; // Base URL for images
+$imageBaseURL = "https://api.akulla.dev/public/uploads/"; // Base URL for images 
 $steamAPIKey = "C20439FDF3895553DC8BE690AF976E24"; // Your Steam API Key
 $fillerAuthorIcon = "https://img.xylos.gg/aphone/author_icon.png"; // Default icon for the author
 
