@@ -3,7 +3,7 @@
 
 require 'config.php';
 
-// Log function for debugging
+// Log function for debugging 
 function logMessage($message) {
     $logFile = __DIR__ . "/logs/debug_log.txt";
     file_put_contents($logFile, date('Y-m-d H:i:s') . " - $message\n", FILE_APPEND);
